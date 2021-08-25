@@ -27,4 +27,8 @@ android {
 dependencies {
     // Switch out the code lab step to jump to different points in the code lab
     implementation project(':exoplayer-codelab-00')
+    implementation 'com.google.android.exoplayer:exoplayer-core:2.12.0'
+    implementation 'com.google.android.exoplayer:exoplayer-dash:2.12.0'
+    implementation 'com.google.android.exoplayer:exoplayer-ui:2.12.0'
+
 }

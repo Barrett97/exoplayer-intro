@@ -26,28 +26,32 @@ import com.google.android.exoplayer2.util.Util
 /**
  * A fullscreen activity to play audio or video streams.
  */
-class PlayerActivity : AppCompatActivity() {
+class PlayerActivity : AppCompatActivity()
+{
 
     private var player: SimpleExoPlayer? = null
     private var playWhenReady = true
     private var currentWindow = 0
     private var playbackPosition = 0L
 
-    private val viewBinding by lazy(LazyThreadSafetyMode.NONE) {
+    private val viewBinding by lazy(LazyThreadSafetyMode.NONE)
+    {
         ActivityPlayerBinding.inflate(layoutInflater)
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
+    override fun onCreate(savedInstanceState: Bundle?)
+    {
         super.onCreate(savedInstanceState)
         setContentView(viewBinding.root)
     }
 
-    private fun initializePlayer() {
+    private fun initializePlayer()
+    {
         player = SimpleExoPlayer.Builder(this)
             .build()
             .also { exoPlayer ->
                 viewBinding.videoView.player = exoPlayer
-                val mediaItem = MediaItem.fromUri(getString(R.string.media_url_mp3))
+                val mediaItem = MediaItem.fromUri(getString(R.string.media_url_mp4))
                 exoPlayer.setMediaItem(mediaItem)
                 exoPlayer.playWhenReady = playWhenReady
                 exoPlayer.seekTo(currentWindow, playbackPosition)
@@ -55,7 +59,8 @@ class PlayerActivity : AppCompatActivity() {
             }
     }
 
-    private fun hideSystemUi() {
+    private fun hideSystemUi()
+    {
         viewBinding.videoView.systemUiVisibility = (View.SYSTEM_UI_FLAG_LOW_PROFILE
                 or View.SYSTEM_UI_FLAG_FULLSCREEN
                 or View.SYSTEM_UI_FLAG_LAYOUT_STABLE
@@ -64,7 +69,8 @@ class PlayerActivity : AppCompatActivity() {
                 or View.SYSTEM_UI_FLAG_HIDE_NAVIGATION)
     }
 
-    private fun releasePlayer() {
+    private fun releasePlayer()
+    {
         player?.run {
             playbackPosition = this.currentPosition
             currentWindow = this.currentWindowIndex
@@ -74,7 +80,8 @@ class PlayerActivity : AppCompatActivity() {
         player = null
     }
 
-    public override fun onPause() {
+    public override fun onPause()
+    {
         super.onPause()
         if (Util.SDK_INT < 24) {
             releasePlayer()
@@ -82,24 +89,30 @@ class PlayerActivity : AppCompatActivity() {
     }
 
 
-    public override fun onStop() {
+    public override fun onStop()
+    {
         super.onStop()
-        if (Util.SDK_INT >= 24) {
+        if (Util.SDK_INT >= 24)
+        {
             releasePlayer()
         }
     }
 
-    override fun onResume() {
+    override fun onResume()
+    {
         super.onResume()
         hideSystemUi()
-        if ((Util.SDK_INT < 24 || player == null)) {
+        if ((Util.SDK_INT < 24 || player == null))
+        {
             initializePlayer()
         }
     }
 
-    override fun onStart() {
+    override fun onStart()
+    {
         super.onStart()
-        if (Util.SDK_INT >= 24) {
+        if (Util.SDK_INT >= 24)
+        {
             initializePlayer()
         }
     }
